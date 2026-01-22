@@ -8,6 +8,7 @@ import StarIcon from "@/public/assets/icon/StarIcon";
 import { VideoPageLogic } from "../../shared/ui/VideoLogic";
 import MainIcon from "@/public/assets/icon/MainIcon";
 
+
 const BorderStyle = {
   backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
   backgroundOrigin: "border-box",
@@ -45,7 +46,7 @@ export default function VideoPage() {
 
   return (
     <div
-      className="flex w-full min-h-screen font-sans bg-center bg-cover bg-fixed text-[#3d3d3d]"
+      className="flex w-full min-h-screen bg-center bg-cover font-poppins bg-fixed text-[#3d3d3d]"
       style={{ backgroundImage: "url('/assets/image/bgImage.png')" }}
     >
       <div className="flex-1 px-[30px] py-[20px] flex flex-col gap-2">
@@ -159,7 +160,7 @@ export default function VideoPage() {
                 }`}
               >
                 <h2
-                  className="text-center font-semibold text-[18px] leading-tight"
+                  className="text-center  text-[18px] leading-tight"
                   style={textGradient}
                 >
                   {content.cardTitle}
@@ -188,7 +189,7 @@ export default function VideoPage() {
                 }`}
               >
                 <h4
-                  className="text-[14px] font-bold text-center mt-[5px] mb-[10px] leading-tight"
+                  className="text-[14px] text-center mt-[5px] mb-[10px] leading-tight"
                   style={textGradient}
                 >
                   {content.gradient || content.gradient}
@@ -210,7 +211,7 @@ export default function VideoPage() {
                 <p className="text-[14px] text-[#3d3d3d]">
                   {content.highlight || "Performance"}
                 </p>
-                <h4 className="text-[18px] font-bold" style={textGradient}>
+                <h4 className="text-[18px]" style={textGradient}>
                   {content.bigTitle}
                 </h4>
                 <p className="text-[11px] text-[#545961] text-center leading-tight">
