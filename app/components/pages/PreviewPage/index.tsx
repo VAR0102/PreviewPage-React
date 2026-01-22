@@ -2,15 +2,20 @@
 import PlayIcon from "@/public/assets/icon/PlayIcon";
 import Image from "next/image";
 import { useMainPage } from "@/app/components/shared/ui/MainPageLogic";
-import {
-  textGradientStyle,
-  borderGradient,
-} from "@/app/components/shared/ui/GradientStyles";
+import { textGradientStyle } from "@/app/components/shared/ui/GradientStyles";
 import { LangSwitcher } from "../../shared/ui/LangSwitcher";
 
-export default function PreviewPage() {
-  const { lang, setLang, change, videoCards } = useMainPage();
+export default function PreviewPage({
+  onSelectVideo,
+}: {
+  onSelectVideo: () => void;
+}) {
+  const { lang, setLang, change, videoCards, changeVideo } = useMainPage();
 
+  const handleSelection = (id: string) => {
+    changeVideo(id);
+    onSelectVideo();
+  };
   return (
     <div
       className="flex w-full h-screen overflow-hidden bg-cover bg-center bg-no-repeat text-[#3d3d3d] font-poppins"
@@ -30,20 +35,25 @@ export default function PreviewPage() {
           {videoCards.map((card) => (
             <div
               key={card.id}
+              onClick={() => handleSelection(card.id)}
               className="flex flex-col gap-2.5 cursor-pointer group h-fit"
             >
-              <div className="relative w-full rounded-[10px] shadow-md aspect-video overflow-hidden">
+              <div className="relative w-full aspect-video rounded-[10px] shadow-md overflow-hidden bg-gray-200">
                 <Image
                   src="/assets/image/previewImage.png"
                   alt="Preview"
                   fill
-                  style={borderGradient}
-                  className="object-cover rounded-[10px] border border-transparent"
+                  className="object-cover rounded-[10px]"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-85 transition-all duration-200 group-hover:scale-110 group-hover:opacity-100 z-10">
-                  <PlayIcon />
+                <div className="absolute inset-0 flex items-center justify-center group-hover:bg-transparent transition-all z-10">
+                  <div className="opacity-85 hover:scale-110 hover:opacity-100 transition-all duration-200">
+                    <PlayIcon />
+                  </div>
                 </div>
               </div>
+
               <p className="text-[#3d3d3d] text-lg font-light leading-[1.2]">
                 {card.label}
               </p>

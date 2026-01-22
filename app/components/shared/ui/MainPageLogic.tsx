@@ -4,6 +4,9 @@ import { useState } from "react";
 export const useMainPage = () => {
   const [lang, setLang] = useState<"en" | "pt">("en");
 
+  const changeVideo = (id: string) => {
+    localStorage.setItem("myVideo", id);
+  };
   const change = translations[lang];
 
   const videoCards = [
@@ -18,5 +21,6 @@ export const useMainPage = () => {
     setLang,
     change,
     videoCards,
+    changeVideo,
   };
 };
