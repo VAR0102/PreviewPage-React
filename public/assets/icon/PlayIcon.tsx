@@ -23,14 +23,14 @@ const PlayIcon = ({
         cy="58.5"
         r="57"
         fill="black"
-        fill-opacity="0.33"
+        fillOpacity="0.33"
         stroke="url(#paint0_linear_1_1237)"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <path
         d="M84.5 53.6699C87.8333 55.5944 87.8333 60.4056 84.5 62.3301L48.5 83.1147C45.1667 85.0392 41 82.6336 41 78.7846L41 37.2154C41 33.3664 45.1667 30.9608 48.5 32.8853L84.5 53.6699Z"
         fill="white"
-        fill-opacity="0.9"
+        fillOpacity="0.9"
       />
       <defs>
         <clipPath
@@ -47,9 +47,9 @@ const PlayIcon = ({
           y2="-20.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="0.5" stop-color="#646464" />
-          <stop offset="1" stop-color="#EDEDED" />
+          <stop stopColor="white" />
+          <stop offset="0.5" stopColor="#646464" />
+          <stop offset="1" stopColor="#EDEDED" />
         </linearGradient>
       </defs>
     </svg>

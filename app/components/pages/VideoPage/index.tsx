@@ -1,89 +1,41 @@
 "use client";
-import  { useRef, useState } from "react";
 import Image from "next/image";
 import SmallPlayIcon from "@/public/assets/icon/SmallPlayIcon";
 import { LangSwitcher } from "../../shared/ui/LangSwitcher";
-import StarIcon from "@/public/assets/icon/StarIcon";
 import PlayIcon from "@/public/assets/icon/PlayIcon";
+import { videoLayoutData } from "@/app/_mocks/VideoLayoutData";
+import StarIcon from "@/public/assets/icon/StarIcon";
+import { VideoPageLogic } from "../../shared/ui/VideoLogic";
+import MainIcon from "@/public/assets/icon/MainIcon";
 
 const BorderStyle = {
   backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
   backgroundOrigin: "border-box",
   backgroundClip: "content-box, border-box",
 };
-const videoData = {
-  autopilot: {
-    title: "Autopilot",
-    video:
-      "https://pub-b944cbd61027465d8855762e66f17d15.r2.dev/chat-videos-updated/English/Symbiotic%20Broker.mov",
-    cardTitle: "Advanced Negotiation Engine",
-    cardText:
-      "Never type again - Let AI handle client conversation automatically",
-    gradientText: "Smart Suggestion Engine",
-    image: "/assets/image/brain.png",
-    stat: "Up to 90%",
-  },
-  synergy: {
-    title: "Synergy 75x5",
-    video:
-      "https://pub-b944cbd61027465d8855762e66f17d15.r2.dev/chat-videos-updated/English/Synergy%2075x5%E2%84%A2.mov",
-    cardTitle: "Real-Time Suggestion Model",
-    cardText:
-      "Adapts to price, emotion, and context — helping realtors close faster.",
-    gradientText: "75 Paths Engine",
-    image: "/assets/image/light.png",
-    stat: "Up to 3X",
-  },
-
-  ask: {
-    title: "Ask ORACIA",
-    create: "Create your AI extension",
-    image: "/assets/image/question.png",
-    cardTitle: "Remove Any Doubt",
-    cardText:
-      "Instant answers on listings, prices, or property details — right when you need them.",
-    gradient: "Deep Context",
-    smallTitle:
-      "Identifies tone, urgency, and emotion — developing a humanized understanding.",
-    highlight: "Privacy First",
-    bigTitle: "End-to-End",
-    description: "Your workspace, your control",
-  },
-  crm: {
-    title: "Smart-CRM",
-    create: "Create your AI extension",
-    image: "/assets/image/smart.png",
-    cardTitle: "Smart CRM",
-    cardText: "Automatic updating in your sales funnel, lead status and notes",
-    gradient: "Automatic Updatest",
-    smallTitle: "“Conversations — contacts, deals, notes—instantly.“",
-    highlight: "Performance",
-    bigTitle: "Up to 12 x",
-    description: "More agility and precision in data filling",
-  },
+const bigCardIconStyle = {
+  autopilot: " absolute mt-[-35%] left-[75%]",
+  synergy: "absolute  left-[25%]",
+  ask: "absolute mt-[-10%] left-[80%]",
+  crm: "absolute mt-[-20%] ml-[-30%] ",
 };
 
 export default function VideoPage() {
-  const [activeTab, setActiveTab] = useState<"autopilot" | "synergy">(
-    "autopilot",
-  );
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handleTogglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
-
-  const content = videoData[activeTab];
+  const {
+    lang,
+    activeTab,
+    isPlaying,
+    videoRef,
+    content,
+    layout,
+    videoKeys,
+    changeLanguage,
+    isLoading,
+    handleEnded,
+    handleLoadedData,
+    changeVideo,
+    handleTogglePlay,
+  } = VideoPageLogic();
 
   const textGradient = {
     background: "linear-gradient(95deg, #a59fc3, #542b81, #dc379f, #f3a199)",
@@ -98,73 +50,69 @@ export default function VideoPage() {
     >
       <div className="flex-1 px-[30px] py-[20px] flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <h2 className="text-[28px]  font-normal">{content.title}</h2>
-          <div className="inline-flex justify-center items-center p-1 pb-0 shrink rounded-full gap-2 mt-[15px] mb-[5px]">
-            <LangSwitcher
-              lang={"en"}
-              setLang={function (lang: "en" | "pt"): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+          <h2 className="text-[28px] font-normal">{content.title}</h2>
+          <div className="mt-[15px] mb-[5px]">
+            <LangSwitcher lang={lang} setLang={changeLanguage} />
           </div>
         </div>
-
         <div
-          className="relative w-full aspect-[16/8.5] max-h-[1300px] rounded-xl 
-shadow-[0_8px_25px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden"
+          className="relative w-full aspect-[16/8.5] rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden bg-black/10"
           onClick={handleTogglePlay}
         >
+          {isLoading && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/80">
+              <div className="flex justify-center items-center gap-2">
+                <div className="w-12 h-12 rounded-full border-4 border-white/30 border-t-pink-500 border-r-orange-300 animate-spin" />
+                <p className="text-white text-sm">Loading video...</p>
+              </div>
+            </div>
+          )}
           <video
             ref={videoRef}
-            key={content.video}
+            key={`${activeTab}-${lang}`}
             className="w-full h-full object-cover block"
             playsInline
             src={content.video}
-            onEnded={() => setIsPlaying(false)}
+            onLoadedData={handleLoadedData}
+            onEnded={handleEnded}
           />
-
-          {!isPlaying && (
-            <div className="absolute inset-0 flex items-center justify-center  z-10">
-              <div className="opacity-85 transition-all duration-200 hover:scale-110 hover:opacity-100">
+          {!isPlaying && !isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <div className="transition-all duration-200 hover:scale-110">
                 <PlayIcon />
               </div>
             </div>
           )}
         </div>
-
-        <section className="flex justify-between items-center mt-[15px] mb-[15px] gap-[15px] w-full">
-          {Object.keys(videoData).map((key) => {
-            const isActive = activeTab === key;
+        <section className="flex justify-between items-center mt-[5px] mb-[15px] gap-[15px] w-full">
+          {videoKeys.map((key) => {
+            const isActive = key === activeTab;
             return (
               <div
                 key={key}
-                onClick={() => setActiveTab(key as "autopilot" | "synergy")}
-                className="relative cursor-pointer flex-1 min-w-0 group"
+                onClick={() => changeVideo(key)}
+                className="flex-1 cursor-pointer"
               >
                 <div
-                  className={`transition-all duration-300  ${
-                    isActive ? "p-[1.5px]" : ""
-                  }`}
+                  className={`transition-all duration-300 rounded-sm  ${isActive ? "p-[1.5px]" : ""}`}
                   style={isActive ? BorderStyle : {}}
                 >
-                  <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                  <div className="relative w-full aspect-video rounded-sm overflow-hidden">
                     <Image
-                      src="/assets/image/new.png"
+                      src={videoLayoutData[key].thumb}
                       alt={key}
                       fill
-                      className="object-cover w-full"
-                      priority
+                      className="object-cover"
                     />
 
-                    <div className="absolute inset-0 flex items-center justify-center  hover:bg-transparent transition-colors z-10">
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
                       <div className="transition-all duration-200 hover:scale-110">
                         <SmallPlayIcon />
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <p className="text-[12px] font-normal text-[#3a3a3a] mt-1 pl-[2%] capitalize">
+                <p className="text-[12px] font-normal text-[#3a3a3a] mt-1 pl-[2%]">
                   {key === "crm" ? "Smart-CRM" : key}
                 </p>
               </div>
@@ -174,74 +122,99 @@ shadow-[0_8px_25px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden"
       </div>
 
       <div className="w-px bg-[#d3b3d3]" />
-
       <div className="w-[600px] px-[30px] py-[20px] flex flex-col gap-6">
-        <div className="flex flex-col items-center flex-1 gap-4 overflow-hidden">
+        <div className="flex flex-col items-center flex-1 gap-4">
           <Image
             src="/assets/image/name.png"
             alt="logo"
-            className=" object-contain"
             width={200}
-            height={200}
+            height={50}
+            className="object-contain"
           />
 
-          <div className="w-[90%] bg-[#f9e7e7] border border-white rounded-[20px] flex justify-center ">
+          <div className="w-[90%] bg-[#f9e7e7] border border-white rounded-[20px] flex justify-center">
             <Image
-              src="/assets/image/qr.png"
+              src={
+                lang === "pt"
+                  ? "/assets/image/QrCode.png"
+                  : "/assets/image/qr.png"
+              }
               alt="QR"
-              className=" w-[220px] h-[200px]"
-              width={300}
-              height={200}
+              width={200}
+              height={190}
             />
           </div>
 
-          <h3 className="text-[30px] color-[#3d3d3d] font-light text-center">
-            Create your AI extension
+          <h3 className="text-[30px] text-[#3d3d3d] font-light text-center">
+            {content.create}
           </h3>
 
           <div className="w-[90%] flex justify-center">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="row-span-2 w-[240px] h-[330px] rounded-lg bg-[#f9e7e7] relative border border-white px-[15px] py-[15px] flex flex-col justify-between items-center shadow-sm">
+            <div className="grid grid-cols-2  gap-3">
+              <div
+                className={`row-span-2 w-[240px] h-[330px] rounded-lg bg-[#f9e7e7] border border-white px-[15px] py-[15px] flex flex-col justify-between items-center shadow-sm ${
+                  activeTab === "crm" || activeTab === "ask"
+                    ? "order-2"
+                    : "order-1"
+                }`}
+              >
                 <h2
-                  className="text-center font-semibold text-[18px]"
+                  className="text-center font-semibold text-[18px] leading-tight"
                   style={textGradient}
                 >
                   {content.cardTitle}
                 </h2>
-                <Image
-                  src={content.image}
-                  width={200}
-                  height={200}
-                  alt="brain"
-                  className="w-[65%] object-contain py-4"
-                />
+
+                <div className="relative">
+                  <MainIcon className={bigCardIconStyle[activeTab]} />
+
+                  <Image
+                    src={layout.image}
+                    width={140}
+                    height={140}
+                    alt="icon"
+                  />
+                </div>
+
                 <p className="text-[11px] text-center text-[#545961]">
                   {content.cardText}
                 </p>
               </div>
-
-              <div className="bg-[#f9e7e7] relative border border-white rounded-lg px-[15px] py-[10px] w-[235px] h-[200px] flex flex-col justify-between shadow-sm">
+              <div
+                className={`bg-[#f9e7e7] border border-white rounded-lg px-[20px] py-[10px] w-[235px] h-[200px] flex flex-col justify-between shadow-sm ${
+                  activeTab === "crm" || activeTab === "ask"
+                    ? "order-1"
+                    : "order-2"
+                }`}
+              >
                 <h4
                   className="text-[14px] font-bold text-center mt-[5px] mb-[10px] leading-tight"
                   style={textGradient}
                 >
-                  {content.gradientText}
+                  {content.gradient || content.gradient}
                 </h4>
                 <div className="flex justify-center">
                   <StarIcon />
                 </div>
                 <p className="text-[11px] text-center text-[#545961]">
-                  Predictive property suggestion based on client intent
+                  {content.smallTitle}
                 </p>
               </div>
-
-              <div className="bg-[#f9e7e7] border border-white rounded-lg relative px-[15px] py-[10px] flex flex-col justify-center items-center gap-[17px] w-[230px] h-[120px] shadow-sm">
-                <p className="text-[14px] text-[#3d3d3d]">Performance</p>
+              <div
+                className={`bg-[#f9e7e7] border border-white rounded-lg px-[15px] py-[10px] flex flex-col justify-center items-center gap-[15px] w-[230px] h-[120px] shadow-sm ${
+                  activeTab === "crm" || activeTab === "ask"
+                    ? "order-3"
+                    : "order-3"
+                }`}
+              >
+                <p className="text-[14px] text-[#3d3d3d]">
+                  {content.highlight || "Performance"}
+                </p>
                 <h4 className="text-[18px] font-bold" style={textGradient}>
-                  {content.stat}
+                  {content.bigTitle}
                 </h4>
-                <p className="text-[11px] text-[#545961]">
-                  Faster response time
+                <p className="text-[11px] text-[#545961] text-center leading-tight">
+                  {content.description}
                 </p>
               </div>
             </div>

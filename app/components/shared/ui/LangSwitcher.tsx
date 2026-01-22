@@ -4,7 +4,8 @@ interface LangSwitcherProps {
   lang: "en" | "pt";
   setLang: (lang: "en" | "pt") => void;
 }
-const swittcherStyles = "px-4 py-2 rounded-full text-lg font-light transition-all flex items-center gap-2 cursor-pointer";
+const swittcherStyles =
+  "px-4 py-2 rounded-full text-lg font-light transition-all flex items-center gap-2 cursor-pointer";
 export const LangSwitcher = ({ lang, setLang }: LangSwitcherProps) => {
   return (
     <div className="flex p-2 gap-2 rounded-full border border-white bg-white/65 shrink-0 cursor-pointer font-[18px]">
