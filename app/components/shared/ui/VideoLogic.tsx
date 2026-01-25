@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { VideoTranslation } from "@/app/_mocks/VideoTranslation";
-import { videoLayoutData } from "@/app/_mocks/VideoLayoutData";
+
 
 type Lang = "en" | "pt";
 type VideoKey = "autopilot" | "synergy" | "ask" | "crm";
@@ -14,9 +14,9 @@ export function VideoPageLogic() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const layout = videoLayoutData[activeTab];
 
   const videoKeys: VideoKey[] = ["autopilot", "synergy", "ask", "crm"];
+  const videoLabels: string[] = ["Autopilot", "Synergy", "Ask AI", "Smart-CRM"];
 
   useEffect(() => {
     const savedLang = localStorage.getItem("video-lang") as Lang | null;
@@ -24,9 +24,9 @@ export function VideoPageLogic() {
     if (savedLang) {
       setLang(savedLang);
     }
-    if (savedVideo) {
-      setActiveTab(savedVideo);
-    }
+   if (savedVideo && savedVideo !== activeTab) {
+    setActiveTab(savedVideo);
+  }
   }, []);
 
   const changeLanguage = (newLang: Lang) => {
@@ -67,7 +67,6 @@ export function VideoPageLogic() {
     activeTab,
     isPlaying,
     videoRef,
-    layout,
     content,
     videoKeys,
     isLoading,
@@ -76,5 +75,7 @@ export function VideoPageLogic() {
     changeLanguage,
     changeVideo,
     handleTogglePlay,
+    videoLabels,
   };
+  
 }

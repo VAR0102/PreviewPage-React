@@ -14,6 +14,8 @@ export const VideoTranslation = {
       bigTitle: "Up to 90%",
       description: "Faster client respones time",
       autopilot: "Autopilot",
+      image: "/assets/image/brain.png",
+      thumb: "/assets/image/new.png",
     },
     pt: {
       video:
@@ -30,6 +32,8 @@ export const VideoTranslation = {
       bigTitle: "Aumento de 90%",
       description: "No tempo de resposta do cliente",
       autopilot: "Como funciona o piloto automático",
+      image: "/assets/image/brain.png",
+      thumb: "/assets/image/new.png",
     },
   },
 
@@ -48,6 +52,8 @@ export const VideoTranslation = {
       highlight: "Conversion",
       bigTitle: "Up to 3X",
       description: "Better deal-closing rate",
+      image: "/assets/image/light.png",
+      thumb: "/assets/image/new.png",
     },
     pt: {
       video:
@@ -63,6 +69,8 @@ export const VideoTranslation = {
       highlight: "Conversão",
       bigTitle: "Mais de 3X",
       description: "No fechamento de negócios",
+      image: "/assets/image/light.png",
+      thumb: "/assets/image/new.png",
     },
   },
 
@@ -81,6 +89,8 @@ export const VideoTranslation = {
       highlight: "Privacy First",
       bigTitle: "End-to-End",
       description: "Your workspace, your control",
+      image: "/assets/image/question.png",
+      thumb: "/assets/image/new.png",
     },
     pt: {
       video:
@@ -96,6 +106,8 @@ export const VideoTranslation = {
       highlight: "Privacidade em 1º lugar",
       bigTitle: "De Ponta a Ponta",
       description: "Seu ambiente de trabalho, seu controle",
+      image: "/assets/image/question.png",
+      thumb: "/assets/image/new.png",
     },
   },
 
@@ -113,6 +125,8 @@ export const VideoTranslation = {
       highlight: "Performance",
       bigTitle: "Up to 12x",
       description: "More agility and precision in data filling",
+      image: "/assets/image/smart.png",
+      thumb: "/assets/image/new.png",
     },
     pt: {
       video:
@@ -128,6 +142,8 @@ export const VideoTranslation = {
       highlight: "Performance",
       bigTitle: "Até 12x",
       description: "Mais agilidade e precisão no preenchimento de dados",
+      image: "/assets/image/smart.png",
+      thumb: "/assets/image/new.png",
     },
   },
 };

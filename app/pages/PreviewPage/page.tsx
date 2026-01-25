@@ -1,27 +1,43 @@
 "use client";
 import PlayIcon from "@/public/assets/icon/PlayIcon";
 import Image from "next/image";
-import { useMainPage } from "@/app/components/shared/ui/MainPageLogic";
-import { textGradientStyle } from "@/app/components/shared/ui/GradientStyles";
-import { LangSwitcher } from "../../shared/ui/LangSwitcher";
+import { MainPageLogic } from "@/app/components/shared/ui/MainPageLogic";
+import { LangSwitcher } from "@/app/components/shared/ui/LangSwitcher";
+import { useRouter } from "next/navigation";
 
-export default function PreviewPage({
-  onSelectVideo,
-}: {
-  onSelectVideo: () => void;
-}) {
-  const { lang, setLang, change, videoCards, changeVideo } = useMainPage();
+export const gradientStyle = {
+  background:
+    "linear-gradient(93deg, #a59fc3 -82.63%, #542b81 -36.76%, #dc379f 27.24%, #f3a199 73.1%, #faf6e8 113.63%)",
+};
+
+export const textGradientStyle = {
+  ...gradientStyle,
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text",
+};
+
+export const borderGradient = {
+  backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
+  backgroundOrigin: "border-box",
+  backgroundClip: "padding-box, border-box",
+};
+
+export default function PreviewPage() {
+  const router = useRouter();
+  const { lang, setLang, change, videoCards } = MainPageLogic();
 
   const handleSelection = (id: string) => {
-    changeVideo(id);
-    onSelectVideo();
+    localStorage.setItem("video-active", id);
+    router.push("/pages/VideoPage");
   };
+
   return (
     <div
       className="flex w-full h-screen overflow-hidden bg-cover bg-center bg-no-repeat text-[#3d3d3d] font-poppins"
       style={{ backgroundImage: "url('/assets/image/bgImage.png')" }}
     >
-      <div className="flex flex-1 flex-col pt-4 pb-4 px-8 py-8 overflow-hidden min-w-0">
+      <div className="flex flex-1 flex-col px-8 py-8 overflow-hidden min-w-0">
         <h2
           className={`text-[28px] font-light mb-5 text-left ${lang === "pt" ? "text-[24px]" : ""}`}
         >
@@ -38,14 +54,13 @@ export default function PreviewPage({
               onClick={() => handleSelection(card.id)}
               className="flex flex-col gap-2.5 cursor-pointer group h-fit"
             >
-              <div className="relative w-full aspect-video rounded-[10px] shadow-md overflow-hidden bg-gray-200">
+              <div className="relative w-full rounded-[10px] shadow-md aspect-video overflow-hidden">
                 <Image
                   src="/assets/image/previewImage.png"
                   alt="Preview"
                   fill
-                  className="object-cover rounded-[10px]"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
+                  style={borderGradient}
+                  className="object-cover rounded-[10px] border border-transparent"
                 />
                 <div className="absolute inset-0 flex items-center justify-center group-hover:bg-transparent transition-all z-10">
                   <div className="opacity-85 hover:scale-110 hover:opacity-100 transition-all duration-200">

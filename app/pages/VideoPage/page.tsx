@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import SmallPlayIcon from "@/public/assets/icon/SmallPlayIcon";
-import { LangSwitcher } from "../../shared/ui/LangSwitcher";
+import { LangSwitcher } from "@/app/components/shared/ui/LangSwitcher";
 import PlayIcon from "@/public/assets/icon/PlayIcon";
-import { videoLayoutData } from "@/app/_mocks/VideoLayoutData";
 import StarIcon from "@/public/assets/icon/StarIcon";
-import { VideoPageLogic } from "../../shared/ui/VideoLogic";
+import { VideoPageLogic } from "@/app/components/shared/ui/VideoLogic";
 import MainIcon from "@/public/assets/icon/MainIcon";
+import { VideoTranslation } from "@/app/_mocks/VideoTranslation";
+
 
 
 const BorderStyle = {
@@ -17,24 +18,26 @@ const BorderStyle = {
 const bigCardIconStyle = {
   autopilot: " absolute mt-[-35%] left-[75%]",
   synergy: "absolute  left-[25%]",
-  ask: "absolute mt-[-10%] left-[80%]",
+  ask: "absolute w-[120px]  left-[80%] mt-[-20%]" ,
   crm: "absolute mt-[-20%] ml-[-30%] ",
 };
 
 export default function VideoPage() {
+ 
+
   const {
     lang,
     activeTab,
     isPlaying,
     videoRef,
     content,
-    layout,
     videoKeys,
     changeLanguage,
     isLoading,
     handleEnded,
     handleLoadedData,
     changeVideo,
+    videoLabels,
     handleTogglePlay,
   } = VideoPageLogic();
 
@@ -52,7 +55,7 @@ export default function VideoPage() {
       <div className="flex-1 px-[30px] py-[20px] flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <h2 className="text-[28px] font-normal">{content.title}</h2>
-          <div className="mt-[15px] mb-[5px]">
+          <div className="inline-flex justify-center items-center mt-[15px] mb-[5px]">
             <LangSwitcher lang={lang} setLang={changeLanguage} />
           </div>
         </div>
@@ -100,7 +103,7 @@ export default function VideoPage() {
                 >
                   <div className="relative w-full aspect-video rounded-sm overflow-hidden">
                     <Image
-                      src={videoLayoutData[key].thumb}
+                      src={VideoTranslation[key][lang].thumb } 
                       alt={key}
                       fill
                       className="object-cover"
@@ -114,7 +117,7 @@ export default function VideoPage() {
                   </div>
                 </div>
                 <p className="text-[12px] font-normal text-[#3a3a3a] mt-1 pl-[2%]">
-                  {key === "crm" ? "Smart-CRM" : key}
+                 {videoLabels[videoKeys.indexOf(key)]}
                 </p>
               </div>
             );
@@ -170,7 +173,7 @@ export default function VideoPage() {
                   <MainIcon className={bigCardIconStyle[activeTab]} />
 
                   <Image
-                    src={layout.image}
+                    src={content.image}
                     width={140}
                     height={140}
                     alt="icon"
@@ -192,7 +195,7 @@ export default function VideoPage() {
                   className="text-[14px] text-center mt-[5px] mb-[10px] leading-tight"
                   style={textGradient}
                 >
-                  {content.gradient || content.gradient}
+                  {content.gradient}
                 </h4>
                 <div className="flex justify-center">
                   <StarIcon />
@@ -209,7 +212,7 @@ export default function VideoPage() {
                 }`}
               >
                 <p className="text-[14px] text-[#3d3d3d]">
-                  {content.highlight || "Performance"}
+                  {content.highlight}
                 </p>
                 <h4 className="text-[18px]" style={textGradient}>
                   {content.bigTitle}

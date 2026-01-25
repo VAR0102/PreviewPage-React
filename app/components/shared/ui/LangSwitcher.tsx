@@ -1,4 +1,8 @@
-import { gradientStyle } from "@/app/components/shared/ui/GradientStyles";
+export const gradientStyle = {
+  background:
+    "linear-gradient(93deg, #a59fc3 -82.63%, #542b81 -36.76%, #dc379f 27.24%, #f3a199 73.1%, #faf6e8 113.63%)",
+};
+
 
 interface LangSwitcherProps {
   lang: "en" | "pt";
