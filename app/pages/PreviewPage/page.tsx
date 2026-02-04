@@ -5,27 +5,9 @@ import { MainPageLogic } from "@/app/components/shared/ui/MainPageLogic";
 import { LangSwitcher } from "@/app/components/shared/ui/LangSwitcher";
 import { useRouter } from "next/navigation";
 
-export const gradientStyle = {
-  background:
-    "linear-gradient(93deg, #a59fc3 -82.63%, #542b81 -36.76%, #dc379f 27.24%, #f3a199 73.1%, #faf6e8 113.63%)",
-};
-
-export const textGradientStyle = {
-  ...gradientStyle,
-  WebkitBackgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  backgroundClip: "text",
-};
-
-export const borderGradient = {
-  backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
-  backgroundOrigin: "border-box",
-  backgroundClip: "padding-box, border-box",
-};
-
 export default function PreviewPage() {
   const router = useRouter();
-  const { lang, setLang, change, videoCards } = MainPageLogic();
+  const { lang, setLang,  handleSetLang, change, videoCards } = MainPageLogic();
 
   const handleSelection = (id: string) => {
     localStorage.setItem("video-active", id);
@@ -41,7 +23,18 @@ export default function PreviewPage() {
         <h2
           className={`text-[28px] font-light mb-5 text-left ${lang === "pt" ? "text-[24px]" : ""}`}
         >
-          <span style={textGradientStyle} className="font-normal">
+          <span
+            style={{
+              background:
+                "linear-gradient(93deg, #a59fc3 -82.63%, #542b81 -36.76%, #dc379f 27.24%, #f3a199 73.1%, #faf6e8 113.63%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+            className="font-normal"
+          >
+
+            
             {change.gradient}
           </span>
           <span>{change.title}</span>
@@ -59,7 +52,11 @@ export default function PreviewPage() {
                   src="/assets/image/previewImage.png"
                   alt="Preview"
                   fill
-                  style={borderGradient}
+                  style={{
+                    backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
+                    backgroundOrigin: "border-box",
+                    backgroundClip: "padding-box, border-box",
+                  }}
                   className="object-cover rounded-[10px] border border-transparent"
                 />
                 <div className="absolute inset-0 flex items-center justify-center group-hover:bg-transparent transition-all z-10">
@@ -105,7 +102,7 @@ export default function PreviewPage() {
         </h3>
 
         <div className="flex p-2 gap-2 rounded-full  shrink-0">
-          <LangSwitcher lang={lang} setLang={setLang} />
+          <LangSwitcher lang={lang} setLang={handleSetLang} />
         </div>
       </div>
     </div>

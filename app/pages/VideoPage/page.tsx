@@ -8,23 +8,7 @@ import { VideoPageLogic } from "@/app/components/shared/ui/VideoLogic";
 import MainIcon from "@/public/assets/icon/MainIcon";
 import { VideoTranslation } from "@/app/_mocks/VideoTranslation";
 
-
-
-const BorderStyle = {
-  backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
-  backgroundOrigin: "border-box",
-  backgroundClip: "content-box, border-box",
-};
-const bigCardIconStyle = {
-  autopilot: " absolute mt-[-35%] left-[75%]",
-  synergy: "absolute  left-[25%]",
-  ask: "absolute w-[120px]  left-[80%] mt-[-20%]" ,
-  crm: "absolute mt-[-20%] ml-[-30%] ",
-};
-
 export default function VideoPage() {
- 
-
   const {
     lang,
     activeTab,
@@ -34,18 +18,18 @@ export default function VideoPage() {
     videoKeys,
     changeLanguage,
     isLoading,
-    handleEnded,
+    isReady,
     handleLoadedData,
+    handleEnded,
+    handleCanPlay,
     changeVideo,
     videoLabels,
     handleTogglePlay,
   } = VideoPageLogic();
 
-  const textGradient = {
-    background: "linear-gradient(95deg, #a59fc3, #542b81, #dc379f, #f3a199)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  };
+  if (!isReady) {
+    return <div className="min-h-screen bg-black" />;
+  }
 
   return (
     <div
@@ -74,11 +58,12 @@ export default function VideoPage() {
           <video
             ref={videoRef}
             key={`${activeTab}-${lang}`}
-            className="w-full h-full object-cover block"
-            playsInline
             src={content.video}
             onLoadedData={handleLoadedData}
+            onCanPlay={handleCanPlay}
             onEnded={handleEnded}
+            className="w-full h-full object-cover"
+            playsInline
           />
           {!isPlaying && !isLoading && (
             <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -99,11 +84,19 @@ export default function VideoPage() {
               >
                 <div
                   className={`transition-all duration-300 rounded-sm  ${isActive ? "p-[1.5px]" : ""}`}
-                  style={isActive ? BorderStyle : {}}
+                  style={
+                    isActive
+                      ? {
+                          backgroundImage: `linear-gradient(white, white), linear-gradient(92.35deg, #a59fc3 -94.27%, #542b81 -42.42%, #dc379f 29.93%, #f3a199 81.78%, #faf6e8 127.6%)`,
+                          backgroundOrigin: "border-box",
+                          backgroundClip: "content-box, border-box",
+                        }
+                      : {}
+                  }
                 >
                   <div className="relative w-full aspect-video rounded-sm overflow-hidden">
                     <Image
-                      src={VideoTranslation[key][lang].thumb } 
+                      src={VideoTranslation[key][lang].thumb}
                       alt={key}
                       fill
                       className="object-cover"
@@ -117,7 +110,7 @@ export default function VideoPage() {
                   </div>
                 </div>
                 <p className="text-[12px] font-normal text-[#3a3a3a] mt-1 pl-[2%]">
-                 {videoLabels[videoKeys.indexOf(key)]}
+                  {videoLabels[videoKeys.indexOf(key)]}
                 </p>
               </div>
             );
@@ -164,13 +157,27 @@ export default function VideoPage() {
               >
                 <h2
                   className="text-center  text-[18px] leading-tight"
-                  style={textGradient}
+                  style={{
+                    background:
+                      "linear-gradient(95deg, #a59fc3, #542b81, #dc379f, #f3a199)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
                 >
                   {content.cardTitle}
                 </h2>
 
                 <div className="relative">
-                  <MainIcon className={bigCardIconStyle[activeTab]} />
+                  <MainIcon
+                    className={
+                      {
+                        autopilot: " absolute mt-[-35%] left-[75%]",
+                        synergy: "absolute  left-[25%]",
+                        ask: "absolute w-[120px]  left-[80%] mt-[-20%]",
+                        crm: "absolute mt-[-20%] ml-[-30%] ",
+                      }[activeTab]
+                    }
+                  />
 
                   <Image
                     src={content.image}
@@ -193,7 +200,12 @@ export default function VideoPage() {
               >
                 <h4
                   className="text-[14px] text-center mt-[5px] mb-[10px] leading-tight"
-                  style={textGradient}
+                  style={{
+                    background:
+                      "linear-gradient(95deg, #a59fc3, #542b81, #dc379f, #f3a199)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
                 >
                   {content.gradient}
                 </h4>
@@ -214,7 +226,15 @@ export default function VideoPage() {
                 <p className="text-[14px] text-[#3d3d3d]">
                   {content.highlight}
                 </p>
-                <h4 className="text-[18px]" style={textGradient}>
+                <h4
+                  className="text-[18px]"
+                  style={{
+                    background:
+                      "linear-gradient(95deg, #a59fc3, #542b81, #dc379f, #f3a199)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
                   {content.bigTitle}
                 </h4>
                 <p className="text-[11px] text-[#545961] text-center leading-tight">
