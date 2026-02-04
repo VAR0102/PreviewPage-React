@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function PreviewPage() {
   const router = useRouter();
-  const { lang, setLang,  handleSetLang, change, videoCards } = MainPageLogic();
+  const { lang, setLang, handleSetLang, change, videoCards } = MainPageLogic();
 
   const handleSelection = (id: string) => {
     localStorage.setItem("video-active", id);
@@ -33,8 +33,6 @@ export default function PreviewPage() {
             }}
             className="font-normal"
           >
-
-            
             {change.gradient}
           </span>
           <span>{change.title}</span>

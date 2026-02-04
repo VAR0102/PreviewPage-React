@@ -18,7 +18,7 @@ export const MainPageLogic = () => {
   };
 
   const change = translations[lang];
-  
+
   const videoCards = [
     { id: "autopilot", label: change.autopilot },
     { id: "synergy", label: change.synergy },

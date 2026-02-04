@@ -7,12 +7,7 @@ const AmericanFlag = ({
   fill?: string;
 }) => {
   return (
-    <svg
-      width={width}
-      height={height}
-
-      viewBox="0 0 496 496"
-    >
+    <svg width={width} height={height} viewBox="0 0 496 496">
       <path
         fill="#BF0A30"
         d="M496,369.6c0,27.2-21.6,48.8-48,48.8H48c-26.4,0-48-21.6-48-48.8V126.4c0-27.2,21.6-43.8,48-43.8h400
@@ -28,7 +23,6 @@ const AmericanFlag = ({
       />
       <g fill="#FFFFFF">
         <path
-        
           d="M4.9,391.2c7.5,15.4,22.7,26.2,40.5,27.1c0.9,0,1.7,0.1,2.6,0.1h400.3c0,0,3.5-0.3,4.6-0.7
 		c1.7-0.6,1.9-2,0.6-3.1l-0.4-0.4L426,391.1H4.9V391.2z"
         />

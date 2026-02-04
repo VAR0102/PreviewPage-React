@@ -44,7 +44,7 @@ export default function VideoPage() {
           </div>
         </div>
         <div
-          className="relative w-full aspect-[16/8.5] rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden bg-black/10"
+          className="relative w-full aspect-[16/9] rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden bg-black/10"
           onClick={handleTogglePlay}
         >
           {isLoading && (

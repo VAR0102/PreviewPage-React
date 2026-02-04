@@ -1,6 +1,6 @@
 const MainIcon = ({
   width = 250,
-  height =250,
+  height = 250,
   className,
   fill,
 }: {
